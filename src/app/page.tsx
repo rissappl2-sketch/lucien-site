@@ -8,12 +8,9 @@ import { Lock } from "lucide-react";
    GLOBAL SITE CONFIG
 ===================================================== */
 
-// Change this manually per season phase:
-// "ACTIVE" | "BLACKOUT" | "COUNTDOWN"
-const SITE_MODE: "ACTIVE" | "BLACKOUT" | "COUNTDOWN" = "COUNTDOWN";
-
-// Set your next drop date here
+const SITE_MODE: "ACTIVE" | "BLACKOUT" | "COUNTDOWN" = "ACTIVE";
 const DROP_DATE = new Date("2026-12-31T18:00:00Z");
+
 /* =====================================================
    MAIN EXPORT
 ===================================================== */
@@ -22,6 +19,45 @@ export default function LucienWebsite() {
   if (SITE_MODE === "BLACKOUT") return <BlackoutMode />;
   if (SITE_MODE === "COUNTDOWN") return <CountdownMode />;
   return <ActiveSeason />;
+}
+
+/* =====================================================
+   ACTIVE SEASON (Clean Version - No Shopify)
+===================================================== */
+
+function ActiveSeason() {
+  return (
+    <div className="min-h-screen bg-neutral-950 text-white flex flex-col items-center justify-center px-6 text-center">
+      
+      <motion.h1
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="text-4xl md:text-6xl font-semibold tracking-wide mb-8"
+      >
+        Season Live
+      </motion.h1>
+
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 1 }}
+        className="text-neutral-400 max-w-xl mb-12"
+      >
+        The next release is being prepared with precision.
+        Product reveal coming soon.
+      </motion.p>
+
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.98 }}
+        className="px-8 py-3 border border-neutral-600 rounded-full text-sm tracking-widest uppercase hover:bg-white hover:text-black transition-all duration-300"
+      >
+        Enter Archive
+      </motion.button>
+
+    </div>
+  );
 }
 
 /* =====================================================
@@ -78,74 +114,9 @@ function BlackoutMode() {
   }, []);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 2.8, ease: "easeOut" }}
-      className="relative min-h-screen bg-neutral-950 overflow-hidden flex items-center justify-center"
-    >
-      {/* Ambient Drift */}
-      <motion.div
-        className="absolute inset-0"
-        animate={{
-          opacity: [0.035, 0.06, 0.035],
-          scale: [1, 1.02, 1],
-        }}
-        transition={{
-          duration: 18,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 50% 40%, rgba(255,255,255,0.08), transparent 65%)",
-        }}
-      />
-
-      {/* Slow Light Sweep */}
-      <motion.div
-        className="absolute inset-0"
-        animate={{ x: ["-10%", "10%", "-10%"] }}
-        transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
-        style={{
-          background:
-            "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%)",
-          opacity: 0.25,
-        }}
-      />
-
-      {/* Grain Texture */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage:
-            "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\"><filter id=\"noise\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.8\" numOctaves=\"2\" stitchTiles=\"stitch\"/></filter><rect width=\"100%\" height=\"100%\" filter=\"url(%23noise)\" opacity=\"0.4\"/></svg>')",
-          opacity: 0.03,
-          mixBlendMode: "overlay",
-        }}
-      />
-
-      {/* Content */}
-      <div className="relative z-10 text-center">
-        <motion.h1
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [0.94, 1, 0.94] }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 0.8,
-          }}
-          className="text-6xl md:text-7xl font-semibold tracking-tight text-neutral-400"
-        >
-          LUCIEN
-        </motion.h1>
-
-        <p className="mt-6 text-sm tracking-widest text-neutral-600 uppercase">
-          Season Closed
-        </p>
-      </div>
-    </motion.div>
+    <div className="min-h-screen bg-neutral-950 flex items-center justify-center">
+      <h1 className="text-6xl text-neutral-400">LUCIEN</h1>
+    </div>
   );
 }
 
@@ -176,43 +147,14 @@ function CountdownMode() {
   if (hasLaunched) return <ActiveSeason />;
 
   return (
-    <div className="relative min-h-screen bg-neutral-950 text-white overflow-hidden flex items-center justify-center">
+    <div className="min-h-screen bg-neutral-950 text-white flex items-center justify-center">
       <div className="text-center">
         <Lock className="mx-auto mb-6 h-8 w-8 text-neutral-500" />
-
-        <h1 className="text-3xl md:text-5xl font-semibold tracking-wide mb-8">
-          Season Approaches
-        </h1>
-
-        <div className="text-3xl md:text-4xl tracking-widest mb-6">
+        <h1 className="text-3xl md:text-5xl mb-8">Season Approaches</h1>
+        <div className="text-3xl">
           {days}d : {hours}h : {minutes}m : {seconds}s
         </div>
-
-        <p className="text-neutral-500 text-sm tracking-wider uppercase">
-          Precision in motion
-        </p>
       </div>
-    </div>
-  );
-}
-
-/* =====================================================
-   ACTIVE SEASON
-===================================================== */
-
-function ActiveSeason() {
-  return (
-    <div className="min-h-screen bg-neutral-950 text-white flex items-center justify-center">
-      <motion.h1
-        initial={{ letterSpacing: "0em", opacity: 0 }}
-        animate={{ letterSpacing: "0.05em", opacity: 1 }}
-        transition={{ duration: 1.2, ease: "easeOut" }}
-        className="text-5xl md:text-7xl font-semibold tracking-tight text-neutral-300"
-      >
-        Bring{" "}
-        <span className="italic tracking-wide text-white">Light</span> Into
-        Street Culture
-      </motion.h1>
     </div>
   );
 }
