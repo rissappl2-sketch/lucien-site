@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function LucienHome() {
@@ -33,7 +34,13 @@ export default function LucienHome() {
 
         <div className="flex gap-10 text-neutral-400">
           <a className="hover:text-white transition">Home</a>
-          <a className="hover:text-white transition">Shop</a>
+
+          <Link href="/shop">
+            <span className="hover:text-white transition cursor-pointer">
+              Shop
+            </span>
+          </Link>
+
           <a className="hover:text-white transition">Track Order</a>
         </div>
 
@@ -64,13 +71,15 @@ export default function LucienHome() {
           Architectural silhouettes. Heavyweight precision. Quiet dominance.
         </motion.p>
 
-        <motion.button
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.98 }}
-          className="mt-10 px-8 py-3 rounded-full border border-neutral-600 text-sm tracking-widest uppercase hover:bg-white hover:text-black transition-all duration-300 shadow-lg"
-        >
-          Explore Collection
-        </motion.button>
+        <Link href="/shop">
+          <motion.button
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.98 }}
+            className="mt-10 px-8 py-3 rounded-full border border-neutral-600 text-sm tracking-widest uppercase hover:bg-white hover:text-black transition-all duration-300 shadow-lg"
+          >
+            Explore Collection
+          </motion.button>
+        </Link>
 
       </div>
 
